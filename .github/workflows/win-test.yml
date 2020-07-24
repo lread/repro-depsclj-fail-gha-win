@@ -17,8 +17,7 @@ jobs:
     - name: Setup alias clojure->deps.clj
       run: |
         mkdir $HOME/bin
-        New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\deps.clj\shims\deps.exe"
-        New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\deps.clj\shims\deps.shim"
+        New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\deps.clj\deps.exe"
         echo "::add-path::$HOME\bin"
 
     - name: Tools versions
