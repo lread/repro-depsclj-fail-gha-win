@@ -50,11 +50,11 @@ jobs:
 
     - name: Tools versions
       run: |
-        # echo "bb --version"
-        # bb --version
         echo "node --version"
         node --version
         echo "java -version"
         java -version
         echo "clojure -Sdescribe"
         clojure -Sdescribe
+        echo "bb --version"
+        bb --version
