@@ -28,11 +28,18 @@ jobs:
        scoop install deps.clj@0.0.9
        echo "::add-path::$HOME\scoop\shims"
 
+    - name: Setup alias clojure->deps.clj for scoop installed deps.exe
+      run: |
+        mkdir $HOME/bin
+        New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.exe"
+        New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.shim"
+        echo "::add-path::$HOME\bin"
+
     - name: Tools versions
       run: |
         echo "node --version"
         node --version
         echo "java -version"
         java -version
-        echo "deps -Sdescribe"
-        deps -Sdescribe
+        echo "clojure -Sdescribe"
+        clojure -Sdescribe
