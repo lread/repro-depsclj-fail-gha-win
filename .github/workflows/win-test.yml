@@ -30,13 +30,15 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
 
+    - name: Configure PATH
+      run: echo "::add-path::$HOME\scoop\shims"
+
     - name: Install deps.exe from scoop
       run: |
        iwr -useb get.scoop.sh | iex
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9
-       echo "::add-path::$HOME\scoop\shims"
 
     - name: Setup alias clojure->deps.clj for scoop installed deps.exe
       run: |
