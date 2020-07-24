@@ -20,6 +20,11 @@ jobs:
     #     New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\deps.clj\deps.exe"
     #     echo "::add-path::$HOME\bin"
 
+    - name: "Setup Java"
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+
     - name: Install deps.exe from scoop
       run: |
        iwr -useb get.scoop.sh | iex
