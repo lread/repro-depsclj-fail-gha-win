@@ -12,6 +12,7 @@ jobs:
     - name: Install deps.exe
       run: |
         PowerShell -Command "iwr -useb https://raw.githubusercontent.com/borkdude/deps.clj/master/install.ps1 | iex"
+        $HOME/deps.clj/deps -Sdescribe
         echo "::add-path::$HOME\deps.clj"
 
     - name: Tools versions
