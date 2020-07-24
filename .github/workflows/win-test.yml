@@ -14,5 +14,11 @@ jobs:
         PowerShell -Command "iwr -useb https://raw.githubusercontent.com/borkdude/deps.clj/master/install.ps1 | iex"
         echo "::add-path::$HOME\deps.clj"
 
-    - name: Run deps.exe
-      run: deps -Sdescribe
+    - name: Tools versions
+      run: |
+        echo "node --version"
+        node --version
+        echo "java -version"
+        java -version
+        echo "deps -Sdescribe"
+        deps -Sdescribe
