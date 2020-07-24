@@ -9,6 +9,8 @@ jobs:
       matrix:
         java: [ 8 ]
 
+    name: Unit Tests - Windows - JDK ${{ matrix.java }}
+
     steps:
     - uses: actions/checkout@v2
 
