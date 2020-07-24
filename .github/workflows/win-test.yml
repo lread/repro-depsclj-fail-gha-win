@@ -5,30 +5,9 @@ on: push
 jobs:
   build:
     runs-on: 'windows-latest'
-    strategy:
-      matrix:
-        java: [ 8 ]
-
-    name: Unit Tests - Windows - JDK ${{ matrix.java }}
 
     steps:
     - uses: actions/checkout@v2
-
-    # - name: Install deps.exe from install.ps1
-    #   run: |
-    #     PowerShell -Command "iwr -useb https://raw.githubusercontent.com/lread/deps.clj/master/install.ps1 | iex"
-    #     echo "::add-path::$HOME\deps.clj"
-
-    # - name: Setup alias clojure->deps.clj from install.ps1
-    #   run: |
-    #     mkdir $HOME/bin
-    #     New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\deps.clj\deps.exe"
-    #     echo "::add-path::$HOME\bin"
-
-    - name: "Setup Java"
-      uses: actions/setup-java@v1
-      with:
-        java-version: ${{ matrix.java }}
 
     - name: Configure PATH
       run: echo "::add-path::$HOME\scoop\shims"
@@ -41,18 +20,12 @@ jobs:
        scoop install babashka@0.1.3 --independent
        scoop install deps.clj@0.0.9 --independent
 
-    - name: Install deps.clj from script and rename to clojure
+    - name: Setup alias clojure->deps.clj for scoop installed deps.exe
       run: |
-       PowerShell -Command "iwr -useb https://raw.githubusercontent.com/lread/deps.clj/master/install.ps1 | iex"
-       Rename-Item $HOME\deps.clj\deps.exe clojure.exe
-       echo "::add-path::$HOME\deps.clj"
-
-    # - name: Setup alias clojure->deps.clj for scoop installed deps.exe
-      # run: |
-        # mkdir $HOME/bin
-        # New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.exe"
-        # New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.shim"
-        # echo "::add-path::$HOME\bin"
+        mkdir $HOME/bin
+        New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.exe"
+        New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.shim"
+        echo "::add-path::$HOME\bin"
 
     - name: Tools versions
       run: |
