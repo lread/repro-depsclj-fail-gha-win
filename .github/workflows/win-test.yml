@@ -9,16 +9,24 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install deps.exe
-      run: |
-        PowerShell -Command "iwr -useb https://raw.githubusercontent.com/borkdude/deps.clj/master/install.ps1 | iex"
-        echo "::add-path::$HOME\deps.clj"
+    # - name: Install deps.exe from install.ps1
+    #   run: |
+    #     PowerShell -Command "iwr -useb https://raw.githubusercontent.com/lread/deps.clj/master/install.ps1 | iex"
+    #     echo "::add-path::$HOME\deps.clj"
 
-    - name: Setup alias clojure->deps.clj
+    # - name: Setup alias clojure->deps.clj from install.ps1
+    #   run: |
+    #     mkdir $HOME/bin
+    #     New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\deps.clj\deps.exe"
+    #     echo "::add-path::$HOME\bin"
+
+    - name: Install deps.exe from scoop
       run: |
-        mkdir $HOME/bin
-        New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\deps.clj\deps.exe"
-        echo "::add-path::$HOME\bin"
+       iwr -useb get.scoop.sh | iex
+       scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
+       scoop bucket add extras
+       scoop install deps.clj@0.0.9
+       echo "::add-path::$HOME\scoop\shims"
 
     - name: Tools versions
       run: |
@@ -26,5 +34,5 @@ jobs:
         node --version
         echo "java -version"
         java -version
-        echo "clojure -Sdescribe"
-        clojure -Sdescribe
+        echo "deps -Sdescribe"
+        deps -Sdescribe
