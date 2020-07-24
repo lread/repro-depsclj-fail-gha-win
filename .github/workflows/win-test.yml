@@ -50,8 +50,8 @@ jobs:
 
     - name: Tools versions
       run: |
-        echo "bb --version"
-        bb --version
+        # echo "bb --version"
+        # bb --version
         echo "node --version"
         node --version
         echo "java -version"
