@@ -24,7 +24,7 @@ jobs:
 
     - name: Install clojure
       run: |
-       PowerShell -Command "iwr -useb https://raw.githubusercontent.com/borkdude/deps.clj/master/install.ps1 | iex
+       PowerShell -Command "iwr -useb https://raw.githubusercontent.com/borkdude/deps.clj/master/install.ps1 | iex"
        Rename-Item $HOME\deps.clj\deps.exe clojure.exe
        echo "::add-path::$HOME\deps.clj"
 
