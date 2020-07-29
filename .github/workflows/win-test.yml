@@ -28,6 +28,7 @@ jobs:
     - name: Install deps as clojure via scoop
       run: |
        scoop install deps.clj@0.0.9
+       mkdir $HOME/bin
        New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.exe"
        New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.shim"
        echo "::add-path::$HOME\bin"
