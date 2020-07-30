@@ -25,7 +25,7 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9
        deps -Sverbose -Sdescribe
-      if: deps-install == 'no-opts'
+      if: matrix.deps-install == 'no-opts'
 
     - name: Install scoop and deps.clj independent
       run: |
@@ -34,4 +34,4 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
        deps -Sverbose -Sdescribe
-      if: deps-install == 'independent'
+      if: matrix.deps-install == 'independent'
