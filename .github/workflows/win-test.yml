@@ -37,6 +37,7 @@ jobs:
     - name: Install deps via scoop with no opts and run
       run: |
        scoop install deps.clj@0.0.9
+       java -version
        .\bin\deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
        Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
@@ -45,6 +46,7 @@ jobs:
     - name: Install deps via scoop with --independent and run
       run: |
        scoop install deps.clj@0.0.9 --independent
+       java -version
        .\bin\deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
        Get-Alias | Export-CSV dumps\alias-install-independent.csv
