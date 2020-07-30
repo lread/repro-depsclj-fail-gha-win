@@ -18,18 +18,17 @@ jobs:
       with:
         java-version: 8
 
+    - name: Create dumps dir
+      run: mkdir dumps
+
     - name: Install scoop and deps.clj no opts
       run: |
        iwr -useb get.scoop.sh | iex
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9
-       echo "-- start dump env --"
-       Get-ChildItem Env:
-       echo "-- edn dump env --"
-       echo "-- start dump aliases --"
-       Get-Alias
-       echo "-- end dump aliases --"
+       Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
+       Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
        echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'no-opts'
 
@@ -39,21 +38,19 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
-       echo "-- start dump env --"
-       Get-ChildItem Env:
-       echo "-- edn dump env --"
-       echo "-- start dump aliases --"
-       Get-Alias
-       echo "-- end dump aliases --"
+       Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
+       Get-Alias | Export-CSV dumps\alias-install-independent.csv
        echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'independent'
 
     - name: Run deps in a separate step
       run: |
-       echo "-- start dump env --"
-       Get-ChildItem Env:
-       echo "-- edn dump env --"
-       echo "-- start dump aliases --"
-       Get-Alias
-       echo "-- end dump aliases --"
+       Get-ChildItem Env: | Export-CSV dumps\env-run-${{ matrix.deps-install }}.csv
+       Get-Alias | Export-CSV dumps\alias-run-${{ matrix.deps-install }}.csv
        deps -Sverbose -Sdescribe
+
+    - name: Upload CSVs as artifacts
+      uses: actions/upload-artifacts@v2
+      with:
+        name: dumps
+        path: dumps/**
