@@ -57,7 +57,7 @@ jobs:
       run: |
        Get-ChildItem Env: | Export-CSV dumps\env-run-${{ matrix.deps-install }}.csv
        Get-Alias | Export-CSV dumps\alias-run-${{ matrix.deps-install }}.csv
-       deps -Sverbose -Sdescribe
+       .\bin\deps.exe -Sverbose -Sdescribe
 
     - name: Dir dump after
       run: |
