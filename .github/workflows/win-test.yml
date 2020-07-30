@@ -13,16 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: "Setup Java"
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
-
-    - name: java version
-      run: |
-       Get-Command java
-       java -version
-
     - name: Create dumps dir
       run: mkdir dumps
 
@@ -39,8 +29,19 @@ jobs:
        scoop bucket add extras
        echo "::add-path::$HOME\scoop\shims"
 
+    - name: "Setup Java"
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+
+    - name: java version
+      run: |
+       Get-Command java
+       java -version
+
     - name: Install deps via scoop with no opts and run
       run: |
+       scoop install deps.clj@0.0.9
        Get-Command java
        java -version
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
@@ -49,6 +50,7 @@ jobs:
 
     - name: Install deps via scoop with --independent and run
       run: |
+       scoop install deps.clj@0.0.9
        Get-Command java
        java -version
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
