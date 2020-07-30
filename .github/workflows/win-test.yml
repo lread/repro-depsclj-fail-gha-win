@@ -24,7 +24,7 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9
-       deps -Sverbose -Sdescribe
+       echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'no-opts'
 
     - name: Install scoop and deps.clj independent
@@ -33,5 +33,7 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
-       deps -Sverbose -Sdescribe
-      if: matrix.deps-install == 'independent'
+       echo "::add-path::$HOME\scoop\shims"
+
+    - name: Run deps in a separate step
+      run: deps -Sverbose -Sdescribe
