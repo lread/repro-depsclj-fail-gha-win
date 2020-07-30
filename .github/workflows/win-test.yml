@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        deps-via: [ scoop-and-run ]
+        deps-install: [ no-opts independent ]
 
     steps:
     - uses: actions/checkout@v2
@@ -18,43 +18,20 @@ jobs:
       with:
         java-version: 8
 
-    - name: Install scoop and bb
+    - name: Install scoop and deps.clj no opts
       run: |
        iwr -useb get.scoop.sh | iex
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
-       scoop install babashka@0.1.3 --independent
-       echo "::add-path::$HOME\scoop\shims"
-
-    - name: Install deps as clojure via scoop
-      run: |
        scoop install deps.clj@0.0.9
-       mkdir $HOME/bin
-       New-Item -Path "$HOME\bin\clojure.exe" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.exe"
-       New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.shim"
-       echo "::add-path::$HOME\bin"
-      if: matrix.deps-via == 'scoop'
+       deps -Sverbose -Sdescribe
+      if: deps-install == 'no-opts'
 
-    - name: Install deps via scoop and run immediately
+    - name: Install scoop and deps.clj independent
       run: |
+       iwr -useb get.scoop.sh | iex
+       scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
+       scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
        deps -Sverbose -Sdescribe
-      if: matrix.deps-via == 'scoop-and-run'
-
-    - name: Install deps as clojure via install.ps1
-      run: |
-       PowerShell -Command "iwr -useb https://raw.githubusercontent.com/borkdude/deps.clj/master/install.ps1 | iex"
-       Rename-Item $HOME\deps.clj\deps.exe clojure.exe
-       echo "::add-path::$HOME\deps.clj"
-      if: matrix.deps-via == 'script'
-
-    - name: Tools versions
-      run: |
-        echo "bb --version"
-        bb --version
-        echo "node --version"
-        node --version
-        echo "java -version"
-        java -version
-        echo "deps -Sdescribe"
-        deps -Sdescribe
+      if: deps-install == 'independent'
