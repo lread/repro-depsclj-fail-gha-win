@@ -37,7 +37,7 @@ jobs:
 
     - name: Install deps via scoop and run immediately
       run: |
-       scoop install deps.clj@0.0.9
+       scoop install deps.clj@0.0.9 --independent
        deps -Sverbose -Sdescribe
       if: matrix.deps-via == 'scoop-and-run'
 
