@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        deps-via: [ scoop ]
+        deps-via: [ scoop-and-run ]
 
     steps:
     - uses: actions/checkout@v2
@@ -34,6 +34,12 @@ jobs:
        New-Item -Path "$HOME\bin\clojure.shim" -ItemType SymbolicLink -Value "$HOME\scoop\shims\deps.shim"
        echo "::add-path::$HOME\bin"
       if: matrix.deps-via == 'scoop'
+
+    - name: Install deps via scoop and run immediately
+      run: |
+       scoop install deps.clj@0.0.9
+       deps -Sverbose -Sdescribe
+      if: matrix.deps-via == 'scoop-and-run'
 
     - name: Install deps as clojure via install.ps1
       run: |
