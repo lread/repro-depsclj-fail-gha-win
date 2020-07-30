@@ -19,7 +19,9 @@ jobs:
         java-version: 8
 
     - name: java version
-      run: java -version
+      run: |
+       Get-Command java
+       java -version
 
     - name: Create dumps dir
       run: mkdir dumps
@@ -40,6 +42,7 @@ jobs:
     - name: Install deps via scoop with no opts and run
       run: |
        scoop install deps.clj@0.0.9
+       Get-Command java
        java -version
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
        Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
@@ -48,6 +51,7 @@ jobs:
     - name: Install deps via scoop with --independent and run
       run: |
        scoop install deps.clj@0.0.9 --independent
+       Get-Command java
        java -version
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
        Get-Alias | Export-CSV dumps\alias-install-independent.csv
