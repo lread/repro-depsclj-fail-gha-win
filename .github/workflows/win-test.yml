@@ -50,7 +50,7 @@ jobs:
        deps -Sverbose -Sdescribe
 
     - name: Upload CSVs as artifacts
-      uses: actions/upload-artifacts@v2
+      uses: actions/upload-artifact@v2
       with:
         name: dumps
         path: dumps/**
