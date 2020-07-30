@@ -34,6 +34,7 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
        echo "::add-path::$HOME\scoop\shims"
+      if: matrix.deps-install == 'independent'
 
     - name: Run deps in a separate step
       run: deps -Sverbose -Sdescribe
