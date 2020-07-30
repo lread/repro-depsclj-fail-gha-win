@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        deps-via: [ scoop, script ]
+        deps-via: [ scoop ]
 
     steps:
     - uses: actions/checkout@v2
@@ -50,5 +50,5 @@ jobs:
         node --version
         echo "java -version"
         java -version
-        echo "clojure -Sdescribe"
-        clojure -Sdescribe
+        echo "deps -Sdescribe"
+        deps -Sdescribe
