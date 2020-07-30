@@ -29,11 +29,6 @@ jobs:
        scoop bucket add extras
        echo "::add-path::$HOME\scoop\shims"
 
-    - name: "Setup Java"
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
-
     - name: java version
       run: |
        Get-Command java
