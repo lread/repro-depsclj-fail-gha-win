@@ -44,6 +44,7 @@ jobs:
        .\bin\deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
        Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
+      shell: pwsh -File {0}
       if: matrix.deps-install == 'no-opts'
 
     - name: Install deps via scoop with --independent and run
@@ -53,6 +54,7 @@ jobs:
        .\bin\deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
        Get-Alias | Export-CSV dumps\alias-install-independent.csv
+      shell: pwsh -File {0}
       if: matrix.deps-install == 'independent'
 
     - name: Run deps in a separate step
