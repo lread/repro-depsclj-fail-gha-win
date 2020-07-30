@@ -24,6 +24,12 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9
+       echo "-- start dump env --"
+       dir :env
+       echo "-- edn dump env --"
+       echo "-- start dump aliases --"
+       Get-Alias
+       echo "-- end dump aliases --"
        echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'no-opts'
 
@@ -33,8 +39,21 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
+       echo "-- start dump env --"
+       dir :env
+       echo "-- edn dump env --"
+       echo "-- start dump aliases --"
+       Get-Alias
+       echo "-- end dump aliases --"
        echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'independent'
 
     - name: Run deps in a separate step
-      run: deps -Sverbose -Sdescribe
+      run: |
+        echo "-- start dump env --"
+        dir :env
+        echo "-- edn dump env --"
+        echo "-- start dump aliases --"
+        Get-Alias
+        echo "-- end dump aliases --"
+        deps -Sverbose -Sdescribe
