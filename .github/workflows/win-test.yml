@@ -27,30 +27,27 @@ jobs:
         Tree 'C:\Users\runneradmin\scoop\shims' /F > dumps\before-shim-dir.txt
         Tree 'C:\Program Files\PowerShell\7' /F > dumps\before-powershell-dir.txt
 
-    - name: Install scoop and deps.clj no opts
+    - name: Install scoop
       run: |
-       # iwr -useb get.scoop.sh | iex
-       # scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
-       # scoop bucket add extras
-       # scoop install deps.clj@0.0.9
-       # cp bin\deps.exe $HOME\scoop\apps\deps.clj\0.0.9
+       iwr -useb get.scoop.sh | iex
+       scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
+       scoop bucket add extras
+       echo "::add-path::$HOME\scoop\shims"
+
+    - name: Install deps via scoop with no opts and run
+      run: |
+       scoop install deps.clj@0.0.9
        .\bin\deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
        Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
-       echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'no-opts'
 
-    - name: Install scoop and deps.clj independent
+    - name: Install deps via scoop with --independent and run
       run: |
-       # iwr -useb get.scoop.sh | iex
-       # scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
-       # scoop bucket add extras
-       # scoop install deps.clj@0.0.9 --independent
-       # cp bin\deps.exe $HOME\scoop\apps\deps.clj\0.0.9
+       scoop install deps.clj@0.0.9 --independent
        .\bin\deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
        Get-Alias | Export-CSV dumps\alias-install-independent.csv
-       echo "::add-path::$HOME\scoop\shims"
       if: matrix.deps-install == 'independent'
 
     - name: Run deps in a separate step
