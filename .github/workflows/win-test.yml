@@ -33,6 +33,7 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9
+       deps -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
        Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
        echo "::add-path::$HOME\scoop\shims"
@@ -44,6 +45,7 @@ jobs:
        scoop bucket add scoop-clojure https://github.com/littleli/scoop-clojure
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
+       deps -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
        Get-Alias | Export-CSV dumps\alias-install-independent.csv
        echo "::add-path::$HOME\scoop\shims"
