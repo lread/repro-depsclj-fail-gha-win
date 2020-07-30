@@ -18,6 +18,9 @@ jobs:
       with:
         java-version: 8
 
+    - name: java version
+      run: java -version
+
     - name: Create dumps dir
       run: mkdir dumps
 
