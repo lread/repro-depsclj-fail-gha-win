@@ -25,7 +25,7 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9
        echo "-- start dump env --"
-       dir :env
+       Get-ChildItem Env:
        echo "-- edn dump env --"
        echo "-- start dump aliases --"
        Get-Alias
@@ -40,7 +40,7 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
        echo "-- start dump env --"
-       dir :env
+       Get-ChildItem Env:
        echo "-- edn dump env --"
        echo "-- start dump aliases --"
        Get-Alias
@@ -50,10 +50,10 @@ jobs:
 
     - name: Run deps in a separate step
       run: |
-        echo "-- start dump env --"
-        dir :env
-        echo "-- edn dump env --"
-        echo "-- start dump aliases --"
-        Get-Alias
-        echo "-- end dump aliases --"
-        deps -Sverbose -Sdescribe
+       echo "-- start dump env --"
+       Get-ChildItem Env:
+       echo "-- edn dump env --"
+       echo "-- start dump aliases --"
+       Get-Alias
+       echo "-- end dump aliases --"
+       deps -Sverbose -Sdescribe
