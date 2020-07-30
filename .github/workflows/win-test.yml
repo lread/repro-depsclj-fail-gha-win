@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        deps-install: [ no-opts independent ]
+        deps-install: [ no-opts, independent ]
 
     steps:
     - uses: actions/checkout@v2
