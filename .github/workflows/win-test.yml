@@ -34,7 +34,7 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9
        cp bin\deps.exe $HOME\scoop\apps\deps.clj\0.0.9
-       deps -Sverbose -Sdescribe
+       deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-no-opts.csv
        Get-Alias | Export-CSV dumps\alias-install-no-opts.csv
        echo "::add-path::$HOME\scoop\shims"
@@ -47,7 +47,7 @@ jobs:
        scoop bucket add extras
        scoop install deps.clj@0.0.9 --independent
        cp bin\deps.exe $HOME\scoop\apps\deps.clj\0.0.9
-       deps -Sverbose -Sdescribe
+       deps.exe -Sverbose -Sdescribe
        Get-ChildItem Env: | Export-CSV dumps\env-install-independent.csv
        Get-Alias | Export-CSV dumps\alias-install-independent.csv
        echo "::add-path::$HOME\scoop\shims"
