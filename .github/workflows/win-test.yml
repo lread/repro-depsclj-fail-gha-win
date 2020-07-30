@@ -18,6 +18,15 @@ jobs:
       with:
         java-version: 8
 
+    - name: Dir dump before
+      run: |
+        echo "Tree /F"
+        Tree /F
+        echo "Tree 'C:\Users\runneradmin\scoop\shims' /F"
+        Tree 'C:\Users\runneradmin\scoop\shims' /F
+        echo "Tree 'C:\Program Files\PowerShell\7' /F"
+        Tree 'C:\Program Files\PowerShell\7' /F
+
     - name: Create dumps dir
       run: mkdir dumps
 
@@ -48,6 +57,15 @@ jobs:
        Get-ChildItem Env: | Export-CSV dumps\env-run-${{ matrix.deps-install }}.csv
        Get-Alias | Export-CSV dumps\alias-run-${{ matrix.deps-install }}.csv
        deps -Sverbose -Sdescribe
+
+    - name: Dir dump after
+      run: |
+        echo "Tree /F"
+        Tree /F
+        echo "Tree 'C:\Users\runneradmin\scoop\shims' /F"
+        Tree 'C:\Users\runneradmin\scoop\shims' /F
+        echo "Tree 'C:\Program Files\PowerShell\7' /F"
+        Tree 'C:\Program Files\PowerShell\7' /F
 
     - name: Upload CSVs as artifacts
       uses: actions/upload-artifact@v2
